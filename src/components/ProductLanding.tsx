@@ -70,8 +70,24 @@ export function ProductLanding({ product }: { product: Product }) {
                 <ArrowRight className="h-5 w-5" />
               </button>
               <div>
-                <div className="text-2xl sm:text-3xl font-black text-white">{product.price}.00 DH</div>
-                <div className="text-xs text-zinc-400">{t("landing.cod")}</div>
+                {product.variants && product.variants.length > 1 ? (
+                  <>
+                    <div className="text-xs text-zinc-400">À partir de</div>
+                    <div className="text-2xl sm:text-3xl font-black text-white">
+                      {Math.min(...product.variants.map((v) => v.price))} DH
+                    </div>
+                    <div className="flex flex-wrap gap-1 mt-1">
+                      {product.variants.map((v) => (
+                        <span key={v.size} className="text-[10px] border border-zinc-700 text-zinc-400 rounded px-1.5 py-0.5">
+                          {v.size} — <span className="text-orange-400 font-bold">{v.price} DH</span>
+                        </span>
+                      ))}
+                    </div>
+                  </>
+                ) : (
+                  <div className="text-2xl sm:text-3xl font-black text-white">{product.price} DH</div>
+                )}
+                <div className="text-xs text-zinc-400 mt-0.5">{t("landing.cod")}</div>
               </div>
             </div>
 

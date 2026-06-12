@@ -1,22 +1,40 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, Truck, ShieldCheck, Headset, Star, Flame } from "lucide-react";
-import { products } from "@/data/products";
+import { ArrowRight, Truck, ShieldCheck, Headset, Star, Flame, Package } from "lucide-react";
+import { products, CATEGORIES, type ProductCategory } from "@/data/products";
 import { useI18n } from "@/i18n";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "Go Fitness — Suppléments authentiques au Maroc 🇲🇦" },
-      { name: "description", content: "Boutique premium de suppléments fitness au Maroc. Mass gainer, whey, créatine. Livraison gratuite, paiement à la livraison." },
+      { name: "description", content: "Boutique premium de suppléments fitness au Maroc. Mass gainer, whey, créatine, pre-workout. Livraison gratuite, paiement à la livraison." },
     ],
   }),
   component: Index,
 });
 
+const FEATURED_CATEGORIES: { id: ProductCategory; icon: string }[] = [
+  { id: "pack", icon: "📦" },
+  { id: "proteine", icon: "💪" },
+  { id: "gainer", icon: "⚡" },
+  { id: "creatine", icon: "🔥" },
+  { id: "pre-workout", icon: "🚀" },
+  { id: "vitamines", icon: "💊" },
+];
+
 function Index() {
-  const { t } = useI18n();
+  const { t, locale } = useI18n();
   const featured = products[0];
-  const rest = products.slice(1);
+  // Show 1 product per featured category on home page
+  const showcaseProducts = products.filter((p) => p.category !== "pack").slice(0, 8);
+
+  const getCatLabel = (id: ProductCategory) => {
+    const cat = CATEGORIES.find((c) => c.id === id);
+    if (!cat) return id;
+    if (locale === "ar") return cat.labelAr;
+    if (locale === "en") return cat.labelEn;
+    return cat.label;
+  };
 
   return (
     <main className="bg-zinc-950">
@@ -27,7 +45,7 @@ function Index() {
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 py-10 sm:py-16 lg:py-24 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10 items-center">
 
-          {/* Product image – first on mobile */}
+          {/* Product image */}
           <Link to="/produit/$slug" params={{ slug: featured.slug }} className="lg:order-2 relative block group max-w-xs sm:max-w-sm mx-auto lg:max-w-none lg:mx-0 w-full">
             <div className="absolute inset-0 bg-orange-500/30 blur-3xl rounded-full" />
             <div className="relative rounded-2xl sm:rounded-3xl border border-zinc-800 bg-gradient-to-b from-zinc-900 to-zinc-950 p-4 sm:p-8 group-hover:border-orange-500/40 transition">
@@ -61,6 +79,9 @@ function Index() {
             <p className="mt-3 sm:mt-4 text-base sm:text-lg text-zinc-300 max-w-xl leading-relaxed">
               {t("hero.subtitle")}
             </p>
+            <div className="mt-4 text-sm text-zinc-400">
+              <span className="text-orange-400 font-bold">{products.length}</span> produits disponibles · Protéines, Gainers, Créatine, Pre-Workout & plus
+            </div>
             <div className="mt-6 flex flex-col sm:flex-row items-start sm:items-center gap-3 flex-wrap">
               <Link
                 to="/boutique"
@@ -105,12 +126,34 @@ function Index() {
         </div>
       </section>
 
-      {/* ── PRODUCTS GRID ── */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
+      {/* ── CATEGORY SHORTCUTS ── */}
+      <section className="border-b border-zinc-900">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
+          <div className="flex items-center gap-2 overflow-x-auto scrollbar-none pb-1 sm:flex-wrap sm:overflow-visible">
+            {FEATURED_CATEGORIES.map(({ id, icon }) => {
+              const count = products.filter((p) => p.category === id).length;
+              return (
+                <Link
+                  key={id}
+                  to="/boutique"
+                  className="shrink-0 sm:flex-1 flex flex-col items-center justify-center gap-1.5 rounded-xl border border-zinc-800 bg-zinc-900/50 hover:border-orange-500/40 hover:bg-zinc-900 p-3 sm:p-4 transition group min-w-[80px]"
+                >
+                  <span className="text-xl sm:text-2xl">{icon}</span>
+                  <span className="text-xs font-bold text-zinc-300 group-hover:text-white text-center leading-tight">{getCatLabel(id)}</span>
+                  <span className="text-[10px] text-zinc-500">{count} produit{count > 1 ? "s" : ""}</span>
+                </Link>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* ── PACKS SECTION ── */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 py-10 sm:py-14">
         <div className="flex items-end justify-between gap-4 flex-wrap mb-6 sm:mb-8">
           <div>
-            <span className="text-orange-400 text-xs font-bold uppercase tracking-wider">
-              {t("section.packs.eyebrow")}
+            <span className="text-orange-400 text-xs font-bold uppercase tracking-wider flex items-center gap-1.5">
+              <Package className="h-3.5 w-3.5" /> {t("section.packs.eyebrow")}
             </span>
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-white mt-1 sm:mt-2">
               {t("section.packs.title")}
@@ -120,37 +163,77 @@ function Index() {
             {t("section.viewAll")} <ArrowRight className="h-4 w-4" />
           </Link>
         </div>
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-5">
-          {rest.map((p) => (
-            <ProductCard key={p.slug} p={p} />
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-5">
+          {products.filter((p) => p.category === "pack").slice(0, 4).map((p) => (
+            <ProductCard key={p.slug} p={p} locale={locale} />
           ))}
+        </div>
+      </section>
+
+      {/* ── INDIVIDUAL PRODUCTS SECTION ── */}
+      <section className="bg-zinc-900/20 border-t border-zinc-900">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10 sm:py-14">
+          <div className="flex items-end justify-between gap-4 flex-wrap mb-6 sm:mb-8">
+            <div>
+              <span className="text-orange-400 text-xs font-bold uppercase tracking-wider">Produits individuels</span>
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-white mt-1 sm:mt-2">
+                Protéines, Créatine & Plus
+              </h2>
+            </div>
+            <Link to="/boutique" className="text-orange-400 font-semibold hover:text-orange-300 inline-flex items-center gap-1 text-sm">
+              {t("section.viewAll")} <ArrowRight className="h-4 w-4" />
+            </Link>
+          </div>
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-5">
+            {showcaseProducts.map((p) => (
+              <ProductCard key={p.slug} p={p} locale={locale} />
+            ))}
+          </div>
         </div>
       </section>
     </main>
   );
 }
 
-function ProductCard({ p }: { p: typeof products[0] }) {
+function ProductCard({ p, locale }: { p: typeof products[0]; locale: string }) {
   const { t } = useI18n();
+  const minPrice = p.variants ? Math.min(...p.variants.map((v) => v.price)) : p.price;
+  const hasVariants = p.variants && p.variants.length > 1;
+
   return (
     <Link
       to="/produit/$slug"
       params={{ slug: p.slug }}
       className="group rounded-2xl border border-zinc-800 bg-zinc-900/40 hover:bg-zinc-900 hover:border-orange-500/40 transition overflow-hidden flex flex-col"
     >
-      <div className="aspect-square bg-gradient-to-b from-zinc-900 to-zinc-950 p-3 sm:p-5">
+      <div className="aspect-square bg-gradient-to-b from-zinc-900 to-zinc-950 p-3 sm:p-4 relative">
+        <span className="absolute top-2 left-2 text-[9px] font-bold bg-zinc-800/90 text-zinc-400 px-1.5 py-0.5 rounded-full border border-zinc-700">
+          {p.brand}
+        </span>
         <img
           src={p.image}
           alt={p.name}
           loading="lazy"
-          className="w-full h-full object-contain group-hover:scale-105 transition"
+          className="w-full h-full object-contain group-hover:scale-105 transition duration-300"
         />
       </div>
       <div className="p-3 sm:p-4 border-t border-zinc-800 flex-1 flex flex-col">
+        <div className="text-[9px] sm:text-[10px] text-orange-400 font-bold uppercase tracking-wider mb-0.5">
+          {CATEGORIES.find((c) => c.id === p.category)?.[
+            locale === "ar" ? "labelAr" : locale === "en" ? "labelEn" : "label"
+          ] ?? p.category}
+        </div>
         <h3 className="font-bold text-white text-xs sm:text-sm leading-tight line-clamp-2">{p.shortName}</h3>
-        <p className="mt-1 text-xs text-zinc-400 line-clamp-2 hidden sm:block leading-relaxed">{p.tagline}</p>
+        <div className="mt-1.5 flex items-center gap-0.5">
+          {Array.from({ length: 5 }).map((_, i) => (
+            <Star key={i} className="h-2.5 w-2.5 fill-amber-400 text-amber-400" />
+          ))}
+        </div>
         <div className="mt-auto pt-2 sm:pt-3 flex items-center justify-between gap-1">
-          <span className="text-orange-400 font-black text-base sm:text-lg">{p.price} DH</span>
+          <div>
+            {hasVariants && <div className="text-[9px] text-zinc-500">Dès</div>}
+            <span className="text-orange-400 font-black text-base sm:text-lg">{minPrice} DH</span>
+          </div>
           <span className="text-xs font-semibold text-zinc-300 group-hover:text-orange-400 inline-flex items-center gap-1">
             {t("card.see")} <ArrowRight className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
           </span>
