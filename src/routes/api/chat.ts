@@ -70,7 +70,7 @@ export const Route = createFileRoute("/api/chat")({
           const result = streamText({
             model,
             system: buildSystemPrompt(locale ?? "fr"),
-            messages: convertToModelMessages(messages),
+            messages: await convertToModelMessages(messages),
           });
           return result.toUIMessageStreamResponse({ originalMessages: messages });
         } catch (e) {
