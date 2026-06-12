@@ -12,6 +12,8 @@ import { useEffect, type ReactNode } from "react";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { AnnouncementBar, Header, Footer } from "@/components/Layout";
+import { I18nProvider } from "@/i18n";
+import { ChatBubble } from "@/components/ChatBubble";
 
 function NotFoundComponent() {
   return (
