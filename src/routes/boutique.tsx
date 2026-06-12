@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
 import { products } from "@/data/products";
+import { useI18n } from "@/i18n";
 
 export const Route = createFileRoute("/boutique")({
   head: () => ({
@@ -13,15 +14,14 @@ export const Route = createFileRoute("/boutique")({
 });
 
 function Boutique() {
+  const { t } = useI18n();
   return (
     <main className="bg-zinc-950 min-h-screen">
       <section className="border-b border-zinc-900 bg-[radial-gradient(circle_at_50%_-20%,rgba(249,115,22,0.18),transparent_60%)]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-16 text-center">
-          <span className="text-orange-400 text-xs font-bold uppercase tracking-wider">Boutique</span>
-          <h1 className="mt-2 text-4xl sm:text-5xl font-black text-white">Tous nos packs fitness</h1>
-          <p className="mt-3 text-zinc-400 max-w-2xl mx-auto">
-            Sélectionnés pour les athlètes marocains. Livraison gratuite, paiement à la livraison.
-          </p>
+          <span className="text-orange-400 text-xs font-bold uppercase tracking-wider">{t("nav.shop")}</span>
+          <h1 className="mt-2 text-4xl sm:text-5xl font-black text-white">{t("shop.title")}</h1>
+          <p className="mt-3 text-zinc-400 max-w-2xl mx-auto">{t("shop.subtitle")}</p>
         </div>
       </section>
 
@@ -43,7 +43,7 @@ function Boutique() {
                 <div className="mt-auto pt-3 flex items-center justify-between">
                   <span className="text-orange-400 font-black text-lg">{p.price} DH</span>
                   <span className="text-xs font-semibold text-zinc-300 group-hover:text-orange-400 inline-flex items-center gap-1">
-                    Voir <ArrowRight className="h-3.5 w-3.5" />
+                    {t("card.see")} <ArrowRight className="h-3.5 w-3.5" />
                   </span>
                 </div>
               </div>

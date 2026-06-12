@@ -1,3 +1,13 @@
+export type PackItem = {
+  name: string;
+  category: string;
+  dosage: string;
+  description: string;
+  benefits: string[];
+  color: string; // tailwind color name e.g. "orange", "amber"
+  icon: "Flame" | "Zap" | "Dumbbell" | "Sparkles" | "Pill" | "Beaker" | "Droplet" | "Atom";
+};
+
 export type Product = {
   slug: string;
   name: string;
@@ -11,6 +21,7 @@ export type Product = {
   ingredients: { title: string; desc: string; icon: string }[];
   problems: string[];
   solutions: string[];
+  items: PackItem[];
 };
 
 const CDN = "https://go-fitness.pro/cdn/shop/files";
@@ -50,6 +61,28 @@ export const products: Product[] = [
       "Récupération accélérée grâce aux BCAA et vitamines",
       "Produits 100% authentiques importés et certifiés",
     ],
+    items: [
+      {
+        name: "Mass Gainer Premium 3kg",
+        category: "Prise de masse",
+        dosage: "1 dose (150g) après l'entraînement",
+        description:
+          "Formule haute calorie combinant whey concentrée, maltodextrine et avoine pour un surplus calorique propre et facilement digestible.",
+        benefits: ["1250 kcal par dose", "50g de protéines", "Glucides complexes lents", "Enrichi en créatine"],
+        color: "orange",
+        icon: "Flame",
+      },
+      {
+        name: "Zinc Chélaté 25mg",
+        category: "Booster hormonal",
+        dosage: "1 capsule le soir au coucher",
+        description:
+          "Zinc bisglycinate hautement biodisponible. Soutient la production naturelle de testostérone, la récupération et l'immunité.",
+        benefits: ["Boost testostérone", "Renforce le système immunitaire", "Améliore le sommeil", "120 capsules / 4 mois"],
+        color: "amber",
+        icon: "Atom",
+      },
+    ],
   },
   {
     slug: "whey-multivitamines-elite-whey-daily-stack",
@@ -84,6 +117,28 @@ export const products: Product[] = [
       "Système immunitaire boosté pour ne plus rater une séance",
       "Récupération musculaire optimisée",
       "Une seule routine, des résultats visibles",
+    ],
+    items: [
+      {
+        name: "Whey Protein Premium 2kg",
+        category: "Protéines",
+        dosage: "1 dose (30g) après l'entraînement ou entre les repas",
+        description:
+          "Whey concentrée filtrée à froid pour préserver le profil aminé. 24g de protéines par dose avec BCAA naturellement présents.",
+        benefits: ["24g de protéines pures", "5.5g de BCAA", "Récupération rapide", "Plusieurs saveurs au choix"],
+        color: "orange",
+        icon: "Dumbbell",
+      },
+      {
+        name: "Daily Multivitamins",
+        category: "Santé quotidienne",
+        dosage: "1 capsule par jour au petit-déjeuner",
+        description:
+          "Complexe complet de 23 vitamines et minéraux essentiels. Soutient l'énergie, l'immunité et la performance sportive.",
+        benefits: ["23 vitamines et minéraux", "Énergie quotidienne", "Immunité renforcée", "60 capsules / 2 mois"],
+        color: "lime",
+        icon: "Pill",
+      },
     ],
   },
   {
@@ -120,6 +175,28 @@ export const products: Product[] = [
       "Grand format pour une cure complète sans interruption",
       "Qualité premium réservée aux athlètes exigeants",
     ],
+    items: [
+      {
+        name: "Beef Protein Isolate 4kg",
+        category: "Protéines premium",
+        dosage: "1 dose (33g) après l'entraînement",
+        description:
+          "Isolat de protéine de bœuf hydrolysée, zéro lactose, zéro gluten. Profil aminé proche de la viande rouge, digestion ultra rapide.",
+        benefits: ["28g de protéines pures", "0g de lactose", "Riche en créatine naturelle", "Grand format 4kg"],
+        color: "orange",
+        icon: "Flame",
+      },
+      {
+        name: "EAA 8000 - 500g",
+        category: "Acides aminés essentiels",
+        dosage: "1 dose (10g) pendant l'entraînement",
+        description:
+          "8000mg d'EAA par dose dont 4000mg de BCAA. Stimule la synthèse protéique et protège la masse musculaire pendant l'effort.",
+        benefits: ["8g d'EAA par dose", "Anti-catabolique", "Hydratation cellulaire", "Saveur fruitée rafraîchissante"],
+        color: "amber",
+        icon: "Beaker",
+      },
+    ],
   },
   {
     slug: "beef-protein-pre-workout-nom-beef-power-performance-stack",
@@ -154,6 +231,28 @@ export const products: Product[] = [
       "Pump et performance amplifiées à l'entraînement",
       "Récupération musculaire optimisée avec la beef protein",
       "Plus de séances ratées par manque d'énergie",
+    ],
+    items: [
+      {
+        name: "Beef Protein 2kg",
+        category: "Protéines",
+        dosage: "1 dose (30g) après la séance",
+        description:
+          "Protéine de bœuf hydrolysée riche en créatine et fer. Idéale pour la reconstruction musculaire après les séances explosives.",
+        benefits: ["26g de protéines", "Sans lactose", "Riche en fer", "Récupération rapide"],
+        color: "orange",
+        icon: "Dumbbell",
+      },
+      {
+        name: "Pre-Workout 300g",
+        category: "Énergie & focus",
+        dosage: "1 dose (10g) 20 minutes avant la séance",
+        description:
+          "Formule explosive : 250mg de caféine, 3g de beta-alanine, 6g de citrulline malate. Énergie, focus et pump garantis.",
+        benefits: ["250mg de caféine", "Pump vasculaire", "Focus mental laser", "30 doses par pot"],
+        color: "red",
+        icon: "Zap",
+      },
     ],
   },
   {
@@ -190,6 +289,28 @@ export const products: Product[] = [
       "Profil aminé complet pour la croissance",
       "Digestion parfaite, zéro inconfort",
     ],
+    items: [
+      {
+        name: "Beef Protein 2kg",
+        category: "Protéines premium",
+        dosage: "1 dose (30g) post-entraînement",
+        description:
+          "Protéine de bœuf hydrolysée pour une absorption rapide et zéro inconfort digestif. Profil aminé complet pour le muscle sec.",
+        benefits: ["26g de protéines", "Sans lactose ni gluten", "Riche en BCAA naturels", "Digestion légère"],
+        color: "orange",
+        icon: "Flame",
+      },
+      {
+        name: "EAA Recovery 400g",
+        category: "Récupération",
+        dosage: "1 dose (10g) pendant ou après la séance",
+        description:
+          "Formule EAA complète avec électrolytes pour relancer la synthèse musculaire et réduire les courbatures.",
+        benefits: ["8g d'EAA", "Électrolytes inclus", "Anti-courbatures", "Hydratation optimale"],
+        color: "amber",
+        icon: "Droplet",
+      },
+    ],
   },
   {
     slug: "whey-creatine-muscle-strength-pro-stack",
@@ -224,6 +345,28 @@ export const products: Product[] = [
       "Volume musculaire visible en quelques semaines",
       "Récupération optimisée avec la whey premium",
       "Le duo le plus efficace en musculation",
+    ],
+    items: [
+      {
+        name: "Whey Protein 2kg",
+        category: "Protéines",
+        dosage: "1 dose (30g) après l'entraînement",
+        description:
+          "Whey concentrée premium avec 24g de protéines par dose et un profil aminé complet pour la reconstruction musculaire.",
+        benefits: ["24g de protéines", "5.5g de BCAA", "Faible en sucres", "Mixe parfaitement"],
+        color: "orange",
+        icon: "Dumbbell",
+      },
+      {
+        name: "Créatine Monohydrate 300g",
+        category: "Force & puissance",
+        dosage: "5g par jour, à tout moment",
+        description:
+          "Créatine monohydrate micronisée 100% pure. Augmente la force, la puissance explosive et le volume cellulaire.",
+        benefits: ["+15% de force", "Volume musculaire", "60 doses par pot", "Pureté pharmaceutique"],
+        color: "amber",
+        icon: "Atom",
+      },
     ],
   },
   {
@@ -260,6 +403,28 @@ export const products: Product[] = [
       "Combo de niveau professionnel",
       "Résultats visibles dignes des athlètes elite",
     ],
+    items: [
+      {
+        name: "SO 100 Whey Isolate 2kg",
+        category: "Protéines isolat premium",
+        dosage: "1 dose (30g) après l'entraînement",
+        description:
+          "Whey isolat ultra-filtrée 90%+. 27g de protéines par dose, quasi zéro lactose, zéro gras. La référence du muscle sec.",
+        benefits: ["27g de protéines pures", "<1g de lactose", "0g de gras", "Absorption ultra rapide"],
+        color: "orange",
+        icon: "Dumbbell",
+      },
+      {
+        name: "Pre-Workout Elite 400g",
+        category: "Énergie elite",
+        dosage: "1 dose (12g) 20-30 min avant la séance",
+        description:
+          "Formule elite : 300mg de caféine, 4g de beta-alanine, 8g de citrulline, taurine et L-tyrosine pour un focus laser.",
+        benefits: ["300mg de caféine", "Pump extrême", "Focus laser", "Énergie longue durée"],
+        color: "red",
+        icon: "Zap",
+      },
+    ],
   },
   {
     slug: "iso-whey-creatine-ultra-lean-strength-stack",
@@ -294,6 +459,28 @@ export const products: Product[] = [
       "Créatine pour la force sans la prise de gras",
       "Zéro lactose, digestion parfaite",
       "Le combo idéal pour la sèche et la performance",
+    ],
+    items: [
+      {
+        name: "Iso Whey Pure 2kg",
+        category: "Isolat ultra-pur",
+        dosage: "1 dose (30g) après l'entraînement",
+        description:
+          "Isolat de whey 90%+ par filtration croisée. 27g de protéines, zéro lactose, zéro gras. Pour le muscle sec uniquement.",
+        benefits: ["27g de protéines", "0g de lactose", "0g de gras", "Idéal en sèche"],
+        color: "orange",
+        icon: "Dumbbell",
+      },
+      {
+        name: "Créatine Pure 300g",
+        category: "Force & puissance",
+        dosage: "5g par jour",
+        description:
+          "Créatine monohydrate micronisée certifiée Creapure®. Augmente la force, la puissance et la rétention musculaire.",
+        benefits: ["Creapure® certifiée", "+15% de force", "Sans rétention d'eau", "60 doses"],
+        color: "amber",
+        icon: "Atom",
+      },
     ],
   },
 ];
