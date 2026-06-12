@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, Truck, ShieldCheck, Headset, Star, Flame } from "lucide-react";
 import { products } from "@/data/products";
+import { useI18n } from "@/i18n";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -13,7 +14,8 @@ export const Route = createFileRoute("/")({
 });
 
 function Index() {
-  const featured = products[0]; // Mass Boost Hormonal Stack
+  const { t } = useI18n();
+  const featured = products[0];
   const rest = products.slice(1);
 
   return (
@@ -25,32 +27,30 @@ function Index() {
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 py-14 sm:py-24 grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
           <div>
             <span className="inline-flex items-center gap-2 rounded-full border border-orange-500/30 bg-orange-500/10 text-orange-300 px-3 py-1 text-xs font-bold uppercase tracking-wider">
-              <Flame className="h-3.5 w-3.5" /> Marque #1 du fitness au Maroc
+              <Flame className="h-3.5 w-3.5" /> {t("hero.badge")}
             </span>
             <h1 className="mt-4 text-4xl sm:text-5xl lg:text-6xl font-black leading-[1.05] tracking-tight text-white">
-              Construis le physique que <span className="text-orange-400">tu mérites</span>
+              {t("hero.title.a")} <span className="text-orange-400">{t("hero.title.b")}</span>
             </h1>
-            <p className="mt-4 text-lg text-zinc-300 max-w-xl">
-              Suppléments 100% authentiques importés et certifiés. Livraison gratuite partout au Maroc. Paiement à la livraison.
-            </p>
+            <p className="mt-4 text-lg text-zinc-300 max-w-xl">{t("hero.subtitle")}</p>
             <div className="mt-7 flex items-center gap-3 flex-wrap">
               <Link
                 to="/boutique"
                 className="inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-b from-orange-400 to-orange-600 hover:from-orange-300 hover:to-orange-500 text-zinc-950 font-black text-base px-6 py-4 shadow-xl shadow-orange-500/30 transition active:scale-[0.98]"
               >
-                Voir la boutique <ArrowRight className="h-5 w-5" />
+                {t("hero.cta.shop")} <ArrowRight className="h-5 w-5" />
               </Link>
               <Link
                 to="/produit/$slug"
                 params={{ slug: featured.slug }}
                 className="inline-flex items-center justify-center gap-2 rounded-xl border border-zinc-700 bg-zinc-900 hover:bg-zinc-800 text-white font-bold px-6 py-4"
               >
-                Pack du moment
+                {t("hero.cta.featured")}
               </Link>
             </div>
             <div className="mt-6 flex items-center gap-1 text-amber-400">
               {Array.from({ length: 5 }).map((_, i) => <Star key={i} className="h-4 w-4 fill-current" />)}
-              <span className="ml-2 text-xs text-zinc-400">+1200 clients satisfaits</span>
+              <span className="ml-2 text-xs text-zinc-400">{t("hero.social")}</span>
             </div>
           </div>
 
@@ -77,9 +77,9 @@ function Index() {
       <section className="border-b border-zinc-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 grid grid-cols-1 sm:grid-cols-3 gap-4">
           {[
-            { icon: ShieldCheck, title: "100% Authentique", desc: "Importé et certifié" },
-            { icon: Truck, title: "Livraison Gratuite", desc: "Partout au Maroc 🇲🇦" },
-            { icon: Headset, title: "Support 7j/7", desc: "Conseillers à l'écoute" },
+            { icon: ShieldCheck, title: t("trust.authentic"), desc: t("trust.authentic.desc") },
+            { icon: Truck, title: t("trust.delivery"), desc: t("trust.delivery.desc") },
+            { icon: Headset, title: t("trust.support"), desc: t("trust.support.desc") },
           ].map(({ icon: Icon, title, desc }) => (
             <div key={title} className="flex items-center gap-4 rounded-xl bg-zinc-900/60 border border-zinc-800 p-4">
               <span className="grid place-items-center h-12 w-12 rounded-xl bg-orange-500/15 text-orange-400 shrink-0">
@@ -98,11 +98,11 @@ function Index() {
       <section className="max-w-7xl mx-auto px-4 sm:px-6 py-16">
         <div className="flex items-end justify-between gap-4 flex-wrap mb-8">
           <div>
-            <span className="text-orange-400 text-xs font-bold uppercase tracking-wider">Nos packs</span>
-            <h2 className="text-3xl sm:text-4xl font-black text-white mt-2">Choisis ton stack</h2>
+            <span className="text-orange-400 text-xs font-bold uppercase tracking-wider">{t("section.packs.eyebrow")}</span>
+            <h2 className="text-3xl sm:text-4xl font-black text-white mt-2">{t("section.packs.title")}</h2>
           </div>
           <Link to="/boutique" className="text-orange-400 font-semibold hover:text-orange-300 inline-flex items-center gap-1">
-            Voir tout <ArrowRight className="h-4 w-4" />
+            {t("section.viewAll")} <ArrowRight className="h-4 w-4" />
           </Link>
         </div>
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5">
