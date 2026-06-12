@@ -116,6 +116,7 @@ function Index() {
 }
 
 function ProductCard({ p }: { p: typeof products[0] }) {
+  const { t } = useI18n();
   return (
     <Link
       to="/produit/$slug"
@@ -131,7 +132,7 @@ function ProductCard({ p }: { p: typeof products[0] }) {
         <div className="mt-auto pt-3 flex items-center justify-between">
           <span className="text-orange-400 font-black text-lg">{p.price} DH</span>
           <span className="text-xs font-semibold text-zinc-300 group-hover:text-orange-400 inline-flex items-center gap-1">
-            Voir <ArrowRight className="h-3.5 w-3.5" />
+            {t("card.see")} <ArrowRight className="h-3.5 w-3.5" />
           </span>
         </div>
       </div>
