@@ -13,6 +13,8 @@ import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as BoutiqueRouteImport } from './routes/boutique'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ProduitSlugRouteImport } from './routes/produit.$slug'
+import { Route as ApiSubscribeRouteImport } from './routes/api/subscribe'
+import { Route as ApiNotifyRouteImport } from './routes/api/notify'
 import { Route as ApiChatRouteImport } from './routes/api/chat'
 
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
@@ -35,6 +37,16 @@ const ProduitSlugRoute = ProduitSlugRouteImport.update({
   path: '/produit/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiSubscribeRoute = ApiSubscribeRouteImport.update({
+  id: '/api/subscribe',
+  path: '/api/subscribe',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiNotifyRoute = ApiNotifyRouteImport.update({
+  id: '/api/notify',
+  path: '/api/notify',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiChatRoute = ApiChatRouteImport.update({
   id: '/api/chat',
   path: '/api/chat',
@@ -46,6 +58,8 @@ export interface FileRoutesByFullPath {
   '/boutique': typeof BoutiqueRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/api/chat': typeof ApiChatRoute
+  '/api/notify': typeof ApiNotifyRoute
+  '/api/subscribe': typeof ApiSubscribeRoute
   '/produit/$slug': typeof ProduitSlugRoute
 }
 export interface FileRoutesByTo {
@@ -53,6 +67,8 @@ export interface FileRoutesByTo {
   '/boutique': typeof BoutiqueRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/api/chat': typeof ApiChatRoute
+  '/api/notify': typeof ApiNotifyRoute
+  '/api/subscribe': typeof ApiSubscribeRoute
   '/produit/$slug': typeof ProduitSlugRoute
 }
 export interface FileRoutesById {
@@ -61,19 +77,37 @@ export interface FileRoutesById {
   '/boutique': typeof BoutiqueRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/api/chat': typeof ApiChatRoute
+  '/api/notify': typeof ApiNotifyRoute
+  '/api/subscribe': typeof ApiSubscribeRoute
   '/produit/$slug': typeof ProduitSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/boutique' | '/sitemap.xml' | '/api/chat' | '/produit/$slug'
+  fullPaths:
+    | '/'
+    | '/boutique'
+    | '/sitemap.xml'
+    | '/api/chat'
+    | '/api/notify'
+    | '/api/subscribe'
+    | '/produit/$slug'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/boutique' | '/sitemap.xml' | '/api/chat' | '/produit/$slug'
+  to:
+    | '/'
+    | '/boutique'
+    | '/sitemap.xml'
+    | '/api/chat'
+    | '/api/notify'
+    | '/api/subscribe'
+    | '/produit/$slug'
   id:
     | '__root__'
     | '/'
     | '/boutique'
     | '/sitemap.xml'
     | '/api/chat'
+    | '/api/notify'
+    | '/api/subscribe'
     | '/produit/$slug'
   fileRoutesById: FileRoutesById
 }
@@ -82,6 +116,8 @@ export interface RootRouteChildren {
   BoutiqueRoute: typeof BoutiqueRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   ApiChatRoute: typeof ApiChatRoute
+  ApiNotifyRoute: typeof ApiNotifyRoute
+  ApiSubscribeRoute: typeof ApiSubscribeRoute
   ProduitSlugRoute: typeof ProduitSlugRoute
 }
 
@@ -115,6 +151,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProduitSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/subscribe': {
+      id: '/api/subscribe'
+      path: '/api/subscribe'
+      fullPath: '/api/subscribe'
+      preLoaderRoute: typeof ApiSubscribeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/notify': {
+      id: '/api/notify'
+      path: '/api/notify'
+      fullPath: '/api/notify'
+      preLoaderRoute: typeof ApiNotifyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/chat': {
       id: '/api/chat'
       path: '/api/chat'
@@ -130,6 +180,8 @@ const rootRouteChildren: RootRouteChildren = {
   BoutiqueRoute: BoutiqueRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   ApiChatRoute: ApiChatRoute,
+  ApiNotifyRoute: ApiNotifyRoute,
+  ApiSubscribeRoute: ApiSubscribeRoute,
   ProduitSlugRoute: ProduitSlugRoute,
 }
 export const routeTree = rootRouteImport

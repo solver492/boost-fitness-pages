@@ -1,0 +1,4 @@
+- [SSR hydration guard](ssr-hydration-guard.md) — components using Notification API / localStorage / window must gate render behind a `mounted` state set in useEffect, or SSR hydration fails.
+- [PWA push notifications](pwa-push-setup.md) — VAPID keys stored in env vars; public key safe to hardcode in client; in-memory subscription store resets on server restart (DB needed for production).
+- [PackBreakdown radial animation](pack-breakdown-animation.md) — Mobile: horizontal snap-scroll carousel; Desktop (md+): sticky radial with 4 diagonal angles ±45°/±135° at 34vw radius, z-10 cards above z-0 center image.
+- [TanStack Start API route format](tanstack-api-format.md) — use `createFileRoute("/api/route")({ server: { handlers: { POST: async ({ request }) => ... } } })`.

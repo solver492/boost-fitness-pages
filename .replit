@@ -38,3 +38,11 @@ externalPort = 80
 deploymentTarget = "autoscale"
 run = ["bun", "run", ".output/server/index.mjs"]
 build = ["bun", "run", "build"]
+
+[userenv]
+
+[userenv.shared]
+VAPID_PUBLIC_KEY = "BI7aUu2gPF5RwAE_J0bF9Neqq08aNMAYmjCTyNviFqQJr40OINLlFmBo-EBx5IRe2Y0PkYms4bwtKaZz6Vq5Ch8"
+VAPID_PRIVATE_KEY = "WcBbnxRzaycnizcMBQPwjYfhUK_d9GJeIUB7AUOpG1E"
+VAPID_EMAIL = "mailto:contact@gofitness.ma"
+NOTIFY_SECRET = "gofitness-admin-2026"

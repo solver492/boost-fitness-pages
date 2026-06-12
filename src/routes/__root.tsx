@@ -14,6 +14,7 @@ import { reportLovableError } from "../lib/lovable-error-reporting";
 import { AnnouncementBar, Header, Footer } from "@/components/Layout";
 import { I18nProvider } from "@/i18n";
 import { ChatBubble } from "@/components/ChatBubble";
+import { PwaInstall } from "@/components/PwaInstall";
 
 function NotFoundComponent() {
   return (
@@ -75,10 +76,15 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
   head: () => ({
     meta: [
       { charSet: "utf-8" },
-      { name: "viewport", content: "width=device-width, initial-scale=1" },
+      { name: "viewport", content: "width=device-width, initial-scale=1, viewport-fit=cover" },
       { title: "Go Fitness — Suppléments authentiques au Maroc, livraison gratuite" },
       { name: "description", content: "Boutique fitness 100% authentique au Maroc. Mass gainer, whey, créatine, pre-workout. Paiement à la livraison, livraison gratuite partout au Maroc." },
       { name: "author", content: "Go Fitness" },
+      { name: "theme-color", content: "#f97316" },
+      { name: "mobile-web-app-capable", content: "yes" },
+      { name: "apple-mobile-web-app-capable", content: "yes" },
+      { name: "apple-mobile-web-app-status-bar-style", content: "black-translucent" },
+      { name: "apple-mobile-web-app-title", content: "Go Fitness" },
       { property: "og:title", content: "Go Fitness — Suppléments authentiques au Maroc" },
       { property: "og:description", content: "Mass gainer, whey, créatine et plus. Paiement à la livraison. Livraison gratuite partout au Maroc 🇲🇦" },
       { property: "og:type", content: "website" },
@@ -86,6 +92,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     ],
     links: [
       { rel: "stylesheet", href: appCss },
+      { rel: "manifest", href: "/manifest.json" },
+      { rel: "apple-touch-icon", href: "/icon-192.png" },
     ],
   }),
   shellComponent: RootShell,
@@ -108,16 +116,29 @@ function RootShell({ children }: { children: ReactNode }) {
   );
 }
 
+function ServiceWorkerRegistrar() {
+  useEffect(() => {
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker
+        .register("/sw.js", { scope: "/" })
+        .catch((err) => console.warn("[SW] registration failed:", err));
+    }
+  }, []);
+  return null;
+}
+
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
   return (
     <QueryClientProvider client={queryClient}>
       <I18nProvider>
+        <ServiceWorkerRegistrar />
         <AnnouncementBar />
         <Header />
         <Outlet />
         <Footer />
         <ChatBubble />
+        <PwaInstall />
       </I18nProvider>
     </QueryClientProvider>
   );

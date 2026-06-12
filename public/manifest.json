@@ -1,0 +1,41 @@
+{
+  "name": "Go Fitness — Suppléments Maroc",
+  "short_name": "Go Fitness",
+  "description": "Boutique fitness 100% authentique au Maroc. Mass gainer, whey, créatine. Livraison gratuite, paiement à la livraison.",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "theme_color": "#f97316",
+  "background_color": "#09090b",
+  "lang": "fr-MA",
+  "categories": ["shopping", "health", "fitness"],
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshot-mobile.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "form_factor": "narrow"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Boutique",
+      "url": "/boutique",
+      "description": "Voir tous nos packs fitness"
+    }
+  ]
+}
